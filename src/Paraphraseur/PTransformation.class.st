@@ -40,8 +40,13 @@ PTransformation >> transform: anAST [
 	(matchedNodes sorted: #depth asSortFunction reversed) do: [ :node |
 		|slot|
 		slot := node parent slotFor: node.
-		node parent
-			perform: slot name asMutator
-			with: (self template substituteParametersWith: { #match -> node }) ].
+		slot type class = CollectionOfType
+			ifTrue: [ |col|
+				col := slot read: node parent.
+				col at: (col indexOf: node) put: (self template substituteParametersWith: { #match -> node }) ]
+			ifFalse: [ 
+				node parent
+					perform: slot name asMutator
+					with: (self template substituteParametersWith: { #match -> node }) ] ].
 	^ astToWorkOn
 ]
