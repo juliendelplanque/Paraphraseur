@@ -9,7 +9,10 @@ PCGProgramNode >> depth [
 
 { #category : #'*Paraphraseur' }
 PCGProgramNode >> parentsIterator [
-	^ LinkedListIterator on: self nextLinkBlock: #parent
+	^ LinkedListIterator on: self nextLinkBlock: [ :node | 
+		node parent isNull
+			ifTrue: [ nil ]
+			ifFalse: [ node parent ] ]
 ]
 
 { #category : #'*Paraphraseur' }
