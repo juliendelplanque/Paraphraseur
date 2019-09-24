@@ -1,6 +1,6 @@
 Class {
 	#name : #PMessageNodePredicate,
-	#superclass : #TQAtomicPredicate,
+	#superclass : #PAtomicPredicate,
 	#instVars : [
 		'selector'
 	],
@@ -14,11 +14,6 @@ PMessageNodePredicate class >> selector: selector [
 		yourself
 ]
 
-{ #category : #testing }
-PMessageNodePredicate >> matches: aTQNodeWrapper [
-	^ aTQNodeWrapper wrappedNode isMessage and: [ aTQNodeWrapper wrappedNode selector = self selector ]
-]
-
 { #category : #accessing }
 PMessageNodePredicate >> selector [
 	^ selector
@@ -27,4 +22,9 @@ PMessageNodePredicate >> selector [
 { #category : #accessing }
 PMessageNodePredicate >> selector: anObject [
 	selector := anObject
+]
+
+{ #category : #testing }
+PMessageNodePredicate >> value: aNode [
+	^ aNode isMessage and: [ aNode selector = self selector ]
 ]
